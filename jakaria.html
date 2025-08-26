@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: black;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+    .calculator {
+      width: 320px;
+      background: black;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0px 0px 20px rgba(0,0,0,0.6);
+    }
+    .display {
+      background: black;
+      color: white;
+      text-align: right;
+      font-size: 2.5em;
+      padding: 20px 10px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      min-height: 50px;
+      overflow-x: auto;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    button {
+      height: 60px;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.5em;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:active {
+      transform: scale(0.95);
+    }
+    .gray {
+      background: #a5a5a5;
+      color: black;
+    }
+    .dark {
+      background: #333;
+      color: white;
+    }
+    .orange {
+      background: orange;
+      color: white;
+    }
+    .wide {
+      grid-column: span 2;
+      border-radius: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+      <button class="gray" onclick="clearDisplay()">AC</button>
+      <button class="gray" onclick="inputValue('%')">%</button>
+      <button class="gray" onclick="plusMinus()">±</button>
+      <button class="orange" onclick="inputValue('/')">÷</button>
+
+      <button class="dark" onclick="inputValue('7')">7</button>
+      <button class="dark" onclick="inputValue('8')">8</button>
+      <button class="dark" onclick="inputValue('9')">9</button>
+      <button class="orange" onclick="inputValue('*')">×</button>
+
+      <button class="dark" onclick="inputValue('4')">4</button>
+      <button class="dark" onclick="inputValue('5')">5</button>
+      <button class="dark" onclick="inputValue('6')">6</button>
+      <button class="orange" onclick="inputValue('-')">−</button>
+
+      <button class="dark" onclick="inputValue('1')">1</button>
+      <button class="dark" onclick="inputValue('2')">2</button>
+      <button class="dark" onclick="inputValue('3')">3</button>
+      <button class="orange" onclick="inputValue('+')">+</button>
+
+      <button class="dark wide" onclick="inputValue('0')">0</button>
+      <button class="dark" onclick="inputValue('.')">.</button>
+      <button class="orange" onclick="calculate()">=</button>
+    </div>
+  </div>
+
+  <script>
+    let display = document.getElementById("display");
+    let currentValue = "";
+
+    function inputValue(val) {
+      if (currentValue === "0" && val !== ".") {
+        currentValue = "";
+      }
+      currentValue += val;
+      display.innerText = currentValue;
+    }
+
+    function clearDisplay() {
+      currentValue = "";
+      display.innerText = "0";
+    }
+
+    function plusMinus() {
+      if (currentValue) {
+        if (currentValue.charAt(0) === "-") {
+          currentValue = currentValue.substring(1);
+        } else {
+          currentValue = "-" + currentValue;
+        }
+        display.innerText = currentValue;
+      }
+    }
+
+    function calculate() {
+      try {
+        currentValue = eval(currentValue).toString();
+        display.innerText = currentValue;
+      } catch {
+        display.innerText = "Error";
+        currentValue = "";
+      }
+    }
+  </script>
+</body>
+</html>
